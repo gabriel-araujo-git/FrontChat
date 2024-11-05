@@ -1,0 +1,65 @@
+.history-panel {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: 20% !important;
+  height: calc(100vh - 60px);
+  padding: 10px;
+  background-color: var(--background);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.history-item {
+  width: 95%;
+  max-width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-overflow: ellipsis;
+  border-radius: 5px;
+}
+
+.botaoSair {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+.botaoIcone2 {
+  width: 16px;
+  padding: 0;
+  background: none !important;
+}
+
+.icon-button {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0; /* Remove espaçamento adicional */
+  box-shadow: none; /* Remove sombra */
+}
+
+
+
+.small-icon {
+  color: black;
+  font-size: 1rem;
+}
+
+.icons-row {
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: self-start;
+  height: 70px;
+}
+
+.history-panel.hide {
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.history-panel.show {
+  transform: translateX(0);
+  transition: transform 0.3s ease-in-out;
+}

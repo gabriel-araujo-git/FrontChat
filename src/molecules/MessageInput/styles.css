@@ -1,0 +1,68 @@
+.message-container {
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  background-color: var(--input);
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 10px;
+  max-width: 100%; /* Define a largura máxima da mensagem */
+  word-wrap: break-word; /* Quebra automaticamente as palavras longas */
+  white-space: pre-wrap;
+  align-items: center;
+  margin-bottom: 100px; /* Ajuste esse valor para subir o contêiner */
+}
+
+.message-text {
+  max-width: 100%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word; /* Garante a quebra em navegadores diferentes */
+}
+
+.message-input {
+  flex-grow: 1;
+  padding: 5px;
+  padding-top: 15px;
+  margin: 0 10px;
+  color: white;
+  background-color: var(--input);
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  resize: none;
+  max-height: 100px;
+}
+
+.message-input::placeholder {
+  color: white;
+}
+
+.botaoIcone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.send-icon {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .message-container {
+      max-width: 100%;
+      padding: 8px;
+  }
+
+  .message-input {
+      margin: 0 8px;
+  }
+
+  .botaoIcone {
+      font-size: 20px;
+  }
+}

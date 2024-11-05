@@ -1,0 +1,17 @@
+.login-box {
+    /* background: rgba(39, 1, 1, 0.089); */
+    padding: 30px;
+    border-radius: 5px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    text-align: center;
+    width: 450px;
+    height: 450px;
+}
+
+.logo {
+  width: 300px; 
+  margin-bottom: 90px;
+  margin-top: 20px;
+  object-fit: contain;
+  
+}

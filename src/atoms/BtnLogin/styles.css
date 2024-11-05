@@ -1,0 +1,22 @@
+.form-group {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.btn-custom {
+    background-color: #F96302 !important;
+    border-color: #F96302 !important;
+    color: white !important;
+    font-size: 1rem;
+    display: block;
+    max-width: 350px;
+    border-radius: 5px;
+    height: 45px; /* Ajuste a altura conforme necessário */
+    line-height: 50px; /* Alinha o texto verticalmente */
+    text-align: center; /* Alinha o texto horizontalmente */
+}
+
+.btn-custom:hover {
+    background-color: #d45302 !important;
+    border-color: #d45302 !important;
+}

@@ -1,0 +1,82 @@
+
+:root {
+    --background: #E9E9ED;
+    --message: #E9E9ED;
+    --input: #FF8B33;
+    --text: #000;
+}
+
+.dark {
+    --background: #494949;
+    --message: #636363;
+    --input: #F56A00;
+    --text: #fff;
+}
+
+.home-container {
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px; /* Mantém padding uniforme nas laterais */
+    padding-top: 40px; /* Adiciona espaço acima para empurrar o conteúdo para baixo */
+    min-height: 100vh;
+}
+
+.history-icon {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    color: #F96302;
+    cursor: pointer;
+    margin-left: 30px; /* Margem à esquerda */
+}
+
+.bottom-bar {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.history-panel {
+    position: fixed;
+    top: 100px; /* Ajusta a posição do painel para descer um pouco */
+    left: 0;
+    width: 250px;
+    background-color: var(--background);
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.botaoSair {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.history-item {
+    color: var(--text);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+    max-width: 90%;
+    transition: background-color 0.3s, box-shadow 0.3s; /* Transição suave para o hover */
+}
+
+/* Efeito hover */
+.history-item:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Cor de fundo ao passar o mouse */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra ao passar o mouse */
+}

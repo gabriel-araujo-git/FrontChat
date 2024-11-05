@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+.chat-window {
+  display: block;
+  width: 100%;
+  padding: 20px;
+}
+
+.chat-message {
+  display: grid;
+  align-items: center;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  grid-template-columns: 48px 1fr;
+}
+
+.chat-message.user {
+  direction: ltr;
+}
+
+.chat-message.bot {
+  direction: rtl;
+}
+
+.message-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  color: var(--text);
+  background-color: var(--message);
+  border-radius: 8px;
+  background-color: #1a1a1a2f;
+  max-width: 100%; /* Ajusta para responsividade */
+  width: 100%;
+  word-wrap: break-word;
+  word-break: break-word; /* Força quebra de palavras longas */
+  overflow-wrap: break-word;
+  white-space: pre-wrap; /* Quebra de linha preservada */
+}
+
+.message-box span {
+  flex-grow: 1;
+}
+
+.message-box .pi-volume-up {
+  padding-left: 8px;
+  margin-left: auto;
+  color: var(--text);
+}
+
+.chat-message.bot .message-box {
+  position: relative;
+  display: flex;
+  padding: 10px;
+  margin-bottom: .5rem;
+  color: var(--text);
+  font-size: 14px;
+  background-color: #1a1a1a17;
+  border: 1px solid #333;
+  border-radius: 10px;
+  max-width: 100%;
+  width: auto;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.logo-message {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  margin-top: -20px;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.message-icons {
+  display: flex;
+  align-items: flex-start;
+  column-gap: 8px;
+  gap: 8px;
+}
+
+.botaoIcone2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 15px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.botaoIcone2:hover {
+  background-color: #e1ffc76b;
+}
+
+.menuOpcoes {
+  z-index: 1000;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 8px;
+  padding-right: 2rem;
+}
+
+.menuOpcoes span {
+  margin-bottom: .4rem;
+  margin-left: .1rem;
+  color: black;
+}
+
+.message-box-bot {
+  text-align: left;
+  background-color: var(--bot-message-bg);
+}
+
+.volume-icon {
+  padding-left: 8px;
+  margin-left: auto;
+}
