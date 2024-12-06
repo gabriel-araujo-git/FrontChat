@@ -1,8 +1,8 @@
 
 :root {
-    --background: #E9E9ED;
+    --background: #f30f0f23;
     --message: #E9E9ED;
-    --input: #FF8B33;
+    --input: #0eee06;
     --text: #000;
 }
 
@@ -21,18 +21,20 @@
     align-items: center;
     padding: 20px; /* Mantém padding uniforme nas laterais */
     padding-top: 40px; /* Adiciona espaço acima para empurrar o conteúdo para baixo */
-    min-height: 100vh;
+    min-height: 150vh;
+    
 }
 
 .history-icon {
     position: fixed;
-    top: 20px;
+    top: 35px; /* Ajuste este valor para alinhar com a lua */
     left: 20px;
     font-size: 30px;
     color: #F96302;
     cursor: pointer;
     margin-left: 30px; /* Margem à esquerda */
 }
+
 
 .bottom-bar {
     width: 100%;
@@ -41,21 +43,10 @@
     justify-content: flex-start;
     align-items: center;
     padding: 10px 20px;
+    
 }
 
-.history-panel {
-    position: fixed;
-    top: 100px; /* Ajusta a posição do painel para descer um pouco */
-    left: 0;
-    width: 250px;
-    background-color: var(--background);
-    padding: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+
 
 
 .botaoSair {
@@ -72,11 +63,7 @@
     text-align: center;
     width: 100%;
     max-width: 90%;
-    transition: background-color 0.3s, box-shadow 0.3s; /* Transição suave para o hover */
+    transition: background-color 0.3s, box-shadow 0.3s; 
+    
 }
 
-/* Efeito hover */
-.history-item:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Cor de fundo ao passar o mouse */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra ao passar o mouse */
-}

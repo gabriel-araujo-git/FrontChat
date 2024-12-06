@@ -2,6 +2,7 @@
 import React from 'react';
 import { Container, ListGroup, Row, Col, Button } from 'react-bootstrap';
 import './styles.css';
+import { BsFillTrash3Fill } from "react-icons/bs";
 
 export const HistoryPanel = ({ history, showHistory, toggleHistory }) => {
   return (
@@ -12,8 +13,13 @@ export const HistoryPanel = ({ history, showHistory, toggleHistory }) => {
           <ListGroup>
             {history.map((msg, index) => (
               <ListGroup.Item key={index} className="history-item text-truncate w-100">
-                {msg.title}
-              </ListGroup.Item>
+              <span>{msg.title}</span>
+              <BsFillTrash3Fill 
+                className="delete-icon" 
+                onClick={() => console.log(`Deletar ${msg.title}`)} 
+              />
+            </ListGroup.Item>
+            
             ))}
           </ListGroup>
           <Row className=" icons-row">

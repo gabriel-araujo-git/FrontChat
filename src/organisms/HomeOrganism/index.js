@@ -11,7 +11,11 @@ export const HomeOrganism = () => {
   const [history, setHistory] = useState([
     { id: 1, title: 'Conversa 1' },
     { id: 2, title: 'Conversa 2' },
-    { id: 3, title: 'Conversa 3' }
+    { id: 3, title: 'Conversa 3' },
+    { id: 3, title: 'Conversa 4' },
+    { id: 3, title: 'Conversa 5' },
+    { id: 3, title: 'Conversa 6' },
+
   ]);
 
   const handleDarkMode = useCallback(() => {

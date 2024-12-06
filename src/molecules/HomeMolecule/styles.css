@@ -1,21 +1,27 @@
-.content {
+/* Geral */
+body {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .content {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    height: 100%;
     max-width: 900px;
     margin-bottom: 60px;
     align-items: center;
     gap: 20px;
-}
-
-.mascot-description-container {
+  }
+  
+  .mascot-description-container {
     display: flex;
     flex-direction: row;
     gap: 20px;
     margin-top: -20px; /* Move o mascote e a descrição um pouco para cima */
-}
-
-.descrição {
+  }
+  
+  .descrição {
     background-color: #FFD1AD;
     border-radius: 10px;
     padding: 20px;
@@ -24,9 +30,9 @@
     position: relative;
     align-self: center;
     margin-top: -40px; /* Move apenas a descrição para cima */
-}
-
-.descrição::before {
+  }
+  
+  .descrição::before {
     content: "";
     position: absolute;
     left: -25px; /* Ajusta a posição da boca */
@@ -37,10 +43,57 @@
     border-top: 20px solid transparent; /* Aumenta a altura da boca */
     border-bottom: 15px solid transparent; /* Aumenta a altura da boca */
     border-right: 25px solid #FFD1AD; /* Aumenta a largura da boca */
-}
-
-.mascot-image {
+  }
+  
+  .mascot-image {
     max-width: 250px;
     max-height: 450px;
     margin-top: -10px;
-}
+  }
+  
+  .description {
+    font-family: 'Poppins', sans-serif; /* Mesma fonte do "Escreva sua mensagem" */
+    font-size: 18px; /* Tamanho da fonte ajustado */
+    color: #333; /* Cor do texto */
+    line-height: 1.5; /* Espaçamento entre linhas */
+  }
+  
+  .message-container-custom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff8b33;
+    border-radius: 10px;
+    padding: 10px 15px;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    position: fixed;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  
+  .message-input-custom {
+    flex: 1;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 18px; /* Tamanho da fonte */
+    color: white;
+    background-color: transparent;
+    min-height: 30px;
+    max-height: 150px;
+  }
+  
+  .message-input-custom::placeholder {
+    color: white;
+    font-size: 18px; /* Tamanho do texto do placeholder */
+    font-family: 'Poppins', sans-serif; /* Fonte do placeholder */
+    opacity: 0.8;
+  }
+  

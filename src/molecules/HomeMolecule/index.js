@@ -7,7 +7,6 @@ import { MessageInput } from '../MessageInput';
 import { IoMenu } from "react-icons/io5";
 
 export const HomeMolecule = ({ setShowHistory, showHistory }) => {
-
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
@@ -50,10 +49,10 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
             </Col>
             <Col xs={6} className="descrição">
               <p className="description">
-              Olá <strong>Lívia</strong>, eu sou o Copelo,<br />
-              <strong>seu assistente virtual!</strong><br />
-              Estou aqui para te ajudar.<br />
-              <strong>Faça sua pergunta...</strong>
+                Olá <strong>Lívia</strong>, eu sou o Copelo,<br />
+                <strong>seu assistente virtual!</strong><br />
+                Estou aqui para te ajudar.<br />
+                <strong>Faça sua pergunta...</strong>
               </p>
             </Col>
           </div>
