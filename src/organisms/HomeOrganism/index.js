@@ -12,14 +12,13 @@ export const HomeOrganism = () => {
     { id: 1, title: 'Conversa 1' },
     { id: 2, title: 'Conversa 2' },
     { id: 3, title: 'Conversa 3' },
-    { id: 3, title: 'Conversa 4' },
-    { id: 3, title: 'Conversa 5' },
-    { id: 3, title: 'Conversa 6' },
-
+    { id: 4, title: 'Conversa 4' },
+    { id: 5, title: 'Conversa 5' },
+    { id: 6, title: 'Conversa 6' },
   ]);
 
   const handleDarkMode = useCallback(() => {
-    setDarkMode(prevDarkMode => !prevDarkMode);
+    setDarkMode((prevDarkMode) => !prevDarkMode);
     document.body.classList.toggle('dark');
   }, []);
 
@@ -32,12 +31,14 @@ export const HomeOrganism = () => {
       <HistoryPanel
         history={history}
         showHistory={showHistory}
-        toggleHistory={() => setShowHistory(prevShowHistory => !prevShowHistory)}
+        toggleHistory={() => setShowHistory((prevShowHistory) => !prevShowHistory)}
+        darkmode={darkmode}
       />
       <HomeMolecule
         setShowHistory={setShowHistory}
         showHistory={showHistory}
+        darkmode={darkmode} 
       />
     </Container>
   );
-}
+};

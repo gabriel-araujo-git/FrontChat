@@ -2,7 +2,6 @@
 :root {
     --background: #f30f0f23;
     --message: #E9E9ED;
-    --input: #0eee06;
     --text: #000;
 }
 
@@ -29,7 +28,7 @@
     position: fixed;
     top: 35px; /* Ajuste este valor para alinhar com a lua */
     left: 20px;
-    font-size: 30px;
+    font-size: 30p  x;
     color: #F96302;
     cursor: pointer;
     margin-left: 30px; /* Margem à esquerda */

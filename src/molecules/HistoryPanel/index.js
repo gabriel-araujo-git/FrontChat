@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Container, ListGroup, Row, Col, Button } from 'react-bootstrap';
 import './styles.css';
@@ -42,6 +41,4 @@ export const HistoryPanel = ({ history, showHistory, toggleHistory }) => {
     
   );
 };
-
-
 

@@ -7,16 +7,18 @@ import { HiVolumeUp } from "react-icons/hi";
 import { HiOutlineDuplicate } from "react-icons/hi";  
 import { BsPersonFill } from "react-icons/bs";
 import { BsCopy } from "react-icons/bs";
+import { TbRobot } from "react-icons/tb";
 export const ChatWindow = ({ messages, handleRatings }) => {
     return (
         <Container fluid className="chat-window">
+            
         {messages.map((msg, index) => (
             <div key={index} className={`chat-message ${msg.sender}`}>
                 {msg.sender === 'user' ? (
                     
                     <BsPersonFill className="user-icon" />
                 ) : (
-                    <img src={Copelo} alt="Logo" className="logo-message" />
+                    <TbRobot alt="Logo" className="logo-message" />
                 )}
                                 
                 <div className="message-content">
@@ -38,7 +40,6 @@ export const ChatWindow = ({ messages, handleRatings }) => {
                         </div>
                     )}
                 </div>              
-
                 <div className='empty-space'></div>
                 
             </div>

@@ -12,6 +12,7 @@
   padding: 10px;
   background-color:#E0E0E4;
   box-shadow: 0 4px 8px rgba(255, 202, 202, 0.1);
+  border-radius: 15px !important;
   
   flex-grow: 1;
 }
@@ -104,3 +105,4 @@ font-family: 'Poppins', sans-serif;
 .history-item:hover .delete-icon {
   display: inline; 
 }
+

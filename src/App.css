@@ -1,3 +1,9 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +41,39 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* styles.css */
+.chat-externo-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat-externo-btn:hover {
+  background-color: #0056b3;
+}
+
+.chat-interno-btn {
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.chat-interno-btn:hover {
+  background-color: #218838;
+}
+
+/* Tela de chat externo */
+h1 {
+  font-size: 2rem;
+  margin-top: 20px;
 }

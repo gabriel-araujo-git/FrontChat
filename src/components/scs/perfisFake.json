@@ -1,0 +1,19 @@
+[ {
+    "nome": "perfilFake1",
+    "funcionalidades": [
+        {
+            "nome": "funcionalidadeFake1",
+            "apelido": "funcionalidadeFake1"
+        }
+    ]
+},
+{
+    "nome": "p01",
+    "funcionalidades": [
+        {
+            "nome": "func01",
+            "apelido": "func01"
+        }
+    ]
+       
+}]

@@ -84,3 +84,7 @@
 .send-icon {
     font-size: 22px;
 }
+
+.mic-icon.listening {
+    color: red;
+}

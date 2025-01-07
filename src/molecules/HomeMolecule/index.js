@@ -1,70 +1,121 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.css';
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
-import Copelo from '../../img/Copelo.png';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { ChatWindow } from '../ChatWindow';
 import { MessageInput } from '../MessageInput';
 import { IoMenu } from "react-icons/io5";
+import UserService from '../../service/UserService';
+import { Link } from 'react-router-dom';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
+
+
+
 
 export const HomeMolecule = ({ setShowHistory, showHistory }) => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
-
-  const handleSendMessage = useCallback(() => {
-    if (inputValue.trim() !== '') {
-      const newMessages = [...messages, { text: inputValue, sender: 'user' }];
-      setMessages(newMessages);
-      setInputValue('');
-
-      setTimeout(() => {
-        setMessages(prevMessages => [
-          ...prevMessages,
-          { text: 'Essa é uma resposta automática do chatbot', sender: 'bot', hasMenu: true }
-        ]);
-      }, 500);
-    }
-  }, [inputValue, messages]);
-
-  const handleRatings = useCallback((isPositive) => {
-    const message = isPositive
-      ? 'Que bom que pude ajudar!'
-      : 'Poxa! Vi que sua resposta foi negativa, me conte o motivo';
-    setMessages(prevMessages => [...prevMessages, { text: message, sender: 'bot', hasMenu: false }]);
-  }, []);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
+  const [showChatButtons, setShowChatButtons] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    const lastMessageElement = document.querySelector('.chat-window > :last-child');
-    if (lastMessageElement) {
-      lastMessageElement.scrollIntoView({ behavior: 'smooth' });
+    if (messages.length === 0) {
+      setShowWelcomeMessage(true);
     }
-  }, [messages]);
+  }, []);
+
+  const handleSendMessage = async () => {
+    if (inputValue.trim() === '') return;
+    
+    setShowWelcomeMessage(false);
+    setShowChatButtons(false);
+    
+    const token = UserService.getToken();
+    const newMessages = [...messages, { text: inputValue, sender: 'user' }];
+    setMessages(newMessages);
+    setInputValue('');
+    setIsLoading(true);
+    setErrorMessage('');
+    console.log(token);
+    try {
+      const response = await fetch('https://run-dev-hol-app-cbc-470141199353.southamerica-east1.run.app/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ message: inputValue }),
+        mode: 'no-cors'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch from API');
+      }
+
+      const data = await response.json();
+      const botMessage = data?.reply || 'Desculpe, não consegui entender sua mensagem.';
+
+      setMessages(prevMessages => [...prevMessages, { text: botMessage, sender: 'bot' }]);
+    } catch (error) {
+      console.error('Error:', error);
+      setMessages(prevMessages => [...prevMessages, { text: 'Houve um erro ao processar sua mensagem. Tente novamente mais tarde.', sender: 'bot' }]);
+      setErrorMessage('Algo deu errado. Tente novamente mais tarde.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="home-container">
       <Row className="content align-items-center">
-        {!messages.length && (
-          <div className="mascot-description-container d-flex">
-            <Col xs={6} className="d-flex justify-content-center">
-              <Image src={Copelo} alt="Mascote Copel" className="mascot-image" fluid />
-            </Col>
-            <Col xs={6} className="descrição">
-              <p className="description">
-                Olá <strong>Lívia</strong>, eu sou o Copelo,<br />
-                <strong>seu assistente virtual!</strong><br />
-                Estou aqui para te ajudar.<br />
-                <strong>Faça sua pergunta...</strong>
-              </p>
-            </Col>
-          </div>
+        {showWelcomeMessage && (
+          <Col xs={12} className="text-center">
+            <p className="welcome-message">
+              Olá <strong>{UserService.getName()}</strong>, bem-vindo(a)!<br />
+              <strong>Estou aqui para te ajudar.</strong><br />
+              <em>Faça sua pergunta...</em>
+            </p>
+          </Col>
         )}
         <Col xs={12}>
-          <ChatWindow messages={messages} handleRatings={handleRatings} />
+          <ChatWindow messages={messages.filter(msg => msg.sender !== 'bot' || msg.text !== `Olá ${UserService.getName()}, como posso ajudar?`)} />
+          {isLoading && <LoadingSpinner />}
         </Col>
       </Row>
       <Row>
         <Col xs={12}>
-          <MessageInput inputValue={inputValue} setInputValue={setInputValue} handleSendMessage={handleSendMessage} />
+          {showChatButtons && (
+            <div
+              className="chats"
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                flexWrap: 'nowrap',
+                justifyContent: 'space-evenly',
+                borderRadius: '10px',
+              }}
+            >
+              <Link to="/chat-externo">
+                <button className="chat-externo-btn" aria-label="Iniciar Chat Externo" style={{ backgroundColor: '#ff8b33' }}>Chat Externo</button>
+              </Link>
+              <button className="chat-interno-btn" aria-label="Iniciar Chat Interno" style={{ backgroundColor: '#ff8b33' }}>Chat Interno</button>
+            </div>
+          )}
+          <MessageInput 
+            inputValue={inputValue} 
+            setInputValue={setInputValue} 
+            handleSendMessage={handleSendMessage} 
+            isLoading={isLoading} 
+          />
         </Col>
+        {errorMessage && (
+          <Col xs={12} className="text-center mt-2">
+            <div className="error-message" style={{ color: 'red' }}>
+              <strong>{errorMessage}</strong>
+            </div>
+          </Col>
+        )}
         <Col xs={12} className="text-center mt-2">
           <Button variant="link" className="history-icon" onClick={() => setShowHistory(!showHistory)}>
             <IoMenu className="history-icon" />

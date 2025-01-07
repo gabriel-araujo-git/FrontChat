@@ -1,22 +1,30 @@
-//Ponto de entrada do seu aplicativo React. Ele renderiza o componente App dentro do elemento root.
+import 'react-app-polyfill/ie11';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'primereact/resources/themes/saga-blue/theme.css'; 
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
+import ReactDOM from 'react-dom/client'; // Alteração para usar a versão correta
+import { HashRouter } from 'react-router-dom';
+import AppRouter from './routes/AppRouter';
+import UserService from './service/UserService';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+import { SCSContexto } from './components/scs/SCSContexto';
+import { initSCS, initSCSFake } from './components/scs/SCSInit';
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const renderApp = (scs, erroSCS) => {
+  const root = ReactDOM.createRoot(document.getElementById('root')); // Usando createRoot
+  root.render(
+    <SCSContexto.Provider value={scs}>
+      <AppRouter erroSCS={erroSCS}></AppRouter>
+    </SCSContexto.Provider>
+  );
+};
+
+// Inicializando o Keycloak
+UserService.initKeycloak(initSCS(renderApp));
+// Caso queira usar a versão Fake:
+// UserService.initKeycloak(initSCSFake(renderApp));
+
+/*
+  O código abaixo foi comentado e pode ser usado se precisar do HashRouter:
+  <HashRouter>
+    <AppRouter erroSCS={erroSCS}></AppRouter>
+  </HashRouter>
+*/

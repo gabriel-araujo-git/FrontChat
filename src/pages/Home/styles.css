@@ -1,15 +1,20 @@
 :root {
-    --background: #ffff;
-    --message: #E9E9ED;
-    --input: #FF8B33;
-    --text: #000;
+    --background: #E9E9ED; /* Fundo claro */
+    --message: #D2D2DA;  /* Mensagem clara */
+    --input: red !important;    /* Barra de entrada */
+    --text: #000;        /* Texto escuro */
 }
 
 .dark {
-    --background: #494949;
-    --message: #636363;
-    --input: #F56A00;
-    --text: #fff;
+    --background: #494949; /* Fundo escuro */
+    --message: #636363;    /* Mensagem escura */
+    --text: #fff;          /* Texto claro */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .home-container {
@@ -20,4 +25,34 @@
     align-items: center;
     padding: 0 0 !important;
     min-height: 100vh;
+    color: var(--text); /* Cor do texto dinâmica */
+}
+
+.chat-message .message-box {
+    background-color: var(--message);
+    color: var(--text); /* Texto se adapta ao tema */
+}
+
+.input-bar-container {
+    background-color: var(--input);
+    color: var(--text);
+}
+
+.input-bar-container textarea {
+    background-color: transparent;
+    color: var(--text);
+}
+
+/* Botões e ícones ajustados para o tema */
+.icon {
+    color: var(--text);
+}
+
+.botaoIcone2:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Mantém um contraste adequado */
+}
+
+
+.history-panel .dark{
+    background-color: red !important;
 }
