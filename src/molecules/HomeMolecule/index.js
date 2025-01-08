@@ -7,6 +7,8 @@ import { IoMenu } from "react-icons/io5";
 import UserService from '../../service/UserService';
 import { Link } from 'react-router-dom';
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
+import serviceAccount from './serviceAccount.json';
+
 
 
 
@@ -46,7 +48,8 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ message: inputValue }),
-        mode: 'no-cors'
+        mode: 'no-cors',
+        
       });
 
       if (!response.ok) {
