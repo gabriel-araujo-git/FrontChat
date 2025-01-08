@@ -1,7 +1,6 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-
-
+ 
+ 
 .chat-window {
   display: flex;
   flex-direction: column;
@@ -10,28 +9,28 @@
   padding: 20px;
   gap: 20px; /* Espaçamento maior entre mensagens */
 }
-
-
+ 
+ 
 .chat-message {
   display: flex;
   align-items: flex-start;
   gap: 10px;
   width: 100%;
   justify-content: center;
-
+ 
 }
-
+ 
 .chat-message.bot{
    flex-direction: row-reverse;
 }
 .chat-message.user{
   flex-direction: row;
-
+ 
 }
 .bot .message-box{
   background-color: #D2D2DA;
 }
-
+ 
 .message-box {
   display: flex;
   justify-content: space-between;
@@ -47,44 +46,44 @@
   font-family: 'Poppins', sans-serif;
   min-width: 30rem;
 }
-
+ 
 .user-icon, .logo-message {
   width: 36px;
   height: auto;
 }
-
+ 
 .empty-space {
   width: 36px;
   height: 36px;
 }
-
+ 
 .message-content {
   flex: 1;
   width: calc(100% - 80px);
 }
-
+ 
 .user-icon {
   font-size: 20px;
   margin-top: 10px;
 }
-
+ 
 /* .logo-message {
   width: 60px;
   height: auto;
 } */
-
+ 
 .volume-icon {
   font-size: 18px;
   margin-left: 8px;
   cursor: pointer;
 }
-
+ 
 .message-icons {
   display: flex;
   gap: 8px;
   margin-top: 5px;
 }
-
+ 
 .botaoIcone2 {
   display: flex;
   justify-content: center;
@@ -96,11 +95,11 @@
   border: none;
   cursor: pointer;
 }
-
+ 
 .botaoIcone2:hover {
   background-color: #e1ffc76b;
 }
-
+ 
 /* Barra de entrada */
 .input-bar-container {
   width: 90%; /* Consistente com o message-box */
@@ -109,7 +108,7 @@
   bottom: 10px;
   margin: 0 auto;
   z-index: 10;
-
+ 
   border-radius: 10px;
   padding: 15px;
   display: flex;
@@ -117,7 +116,7 @@
   gap: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para destaque */
 }
-
+ 
 .input-bar-container textarea {
   flex: 1;
   border: none;
@@ -127,16 +126,16 @@
   font-size: 16px;
   resize: none;
 }
-
+ 
 .input-bar-container .icon {
   font-size: 20px;
   color: white;
   cursor: pointer;
 }
-
-
-
-
+ 
+ 
+ 
+ 
 .chat-externo-btn{
   background-color:#ff8b33;
   font-family: 'Poppins', sans-serif;
@@ -149,16 +148,49 @@
   color: white;
   border-radius: 5px;
 }
-
+ 
 .chat-message.bot {
   flex-direction: row-reverse;
   align-items: center; /* Alinha os elementos verticalmente */
 }
-
+ 
 .logo-message {
   width: 36px;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+ 
+.message-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+ 
+.botaoIcone2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  background-color: transparent;
+  border: 2px solid #ff8b33;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+ 
+.botaoIcone2:hover {
+  background-color: #ff8b33;
+  color: white;
+}
+ 
+.duplicate-icon, .thumbs-up-icon, .thumbs-down-icon {
+  font-size: 20px;
+  color: #ff8b33;
+}
+ 
+.duplicate-icon:hover, .thumbs-up-icon:hover, .thumbs-down-icon:hover {
+  color: white;
 }
