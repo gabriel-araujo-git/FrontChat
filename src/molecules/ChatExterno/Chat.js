@@ -13,18 +13,20 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
- 
+
 const Chat = () => {
   const [messages, setMessages] = useState([]); // Lista de mensagens
   const [input, setInput] = useState(""); // Texto digitado pelo usuário
+  const [file, setFile] = useState(null); // Arquivo selecionado
   const token = UserService.getToken();
+
   // Função para enviar mensagens
   const handleSendMessage = async () => {
     if (input.trim() !== "") {
       const userMessage = { text: input, sender: "user" };
       setMessages([...messages, userMessage]); // Adiciona mensagem do usuário
       setInput(""); // Limpa o campo de texto
- 
+
       try {
         // Chamada à API com fetch e no-cors
         await fetch(
@@ -39,7 +41,7 @@ const Chat = () => {
             body: JSON.stringify({ question: input }),
           }
         );
- 
+
         // Como não é possível acessar a resposta no-cors, exiba uma mensagem genérica
         setMessages((prevMessages) => [
           ...prevMessages,
@@ -54,7 +56,43 @@ const Chat = () => {
       }
     }
   };
- 
+
+  // Função para lidar com o upload de arquivo
+  const handleFileUpload = async () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("session_token", token || ""); // Passa session_token, pode ser vazio
+      formData.append("question", input);
+
+      try {
+        // Envia o arquivo para o endpoint '/multimodal'
+        await fetch(
+          "https://run-dev-hol-app-cbc-470141199353.southamerica-east1.run.app/multimodal",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          }
+        );
+
+        // Mensagem de confirmação de upload
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: "Arquivo enviado com sucesso!", sender: "bot" },
+        ]);
+      } catch (error) {
+        console.error("Erro ao enviar o arquivo:", error);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: "Erro ao enviar o arquivo.", sender: "bot" },
+        ]);
+      }
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -73,7 +111,7 @@ const Chat = () => {
           </Typography>
         </Toolbar>
       </AppBar>
- 
+
       {/* Área de mensagens */}
       <Box
         sx={{
@@ -108,7 +146,7 @@ const Chat = () => {
           ))}
         </List>
       </Box>
- 
+
       {/* Campo de entrada */}
       <Box
         sx={{
@@ -139,10 +177,29 @@ const Chat = () => {
         >
           Enviar
         </Button>
+        {/* Botão de upload */}
+        <Button
+          variant="contained"
+          component="label"
+          sx={{ marginLeft: 1, bgcolor: "#6200EE", color: "#FFF" }}
+        >
+          Upload
+          <input
+            type="file"
+            hidden
+            onChange={(e) => setFile(e.target.files[0])}
+          />
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleFileUpload}
+          sx={{ marginLeft: 1, bgcolor: "#6200EE", color: "#FFF" }}
+        >
+          Enviar Arquivo
+        </Button>
       </Box>
     </Box>
   );
 };
- 
+
 export default Chat;
- 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css';
 import { Container } from 'react-bootstrap';
 import { HiVolumeUp, HiOutlineDuplicate } from "react-icons/hi";  
@@ -6,12 +6,14 @@ import { BsPersonFill, BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { TbRobot } from "react-icons/tb";
 
 export const ChatWindow = ({ messages, handleRatings }) => {
-  
+    const [copyAlert, setCopyAlert] = useState(false);  // Estado para controlar o alerta de cópia
+
     // Função para copiar o conteúdo da mensagem para a área de transferência
     const handleCopyMessage = (text) => {
         navigator.clipboard.writeText(text)
             .then(() => {
-                alert("Mensagem copiada!"); // Pode substituir o alert por outra interação visual, se desejar
+                setCopyAlert(true); // Ativa o alerta
+                setTimeout(() => setCopyAlert(false), 3000); // Desativa o alerta após 3 segundos
             })
             .catch((err) => {
                 console.error('Falha ao copiar: ', err);
@@ -63,6 +65,13 @@ export const ChatWindow = ({ messages, handleRatings }) => {
                     </div>
                 </div>
             ))}
+
+            {/* Alerta de cópia */}
+            {copyAlert && (
+                <div className="copy-alert">
+                    Texto copiado para area de transferência!
+                </div>
+            )}
         </Container>
     );
 };
