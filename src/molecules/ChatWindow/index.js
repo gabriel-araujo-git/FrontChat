@@ -1,25 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles.css';
 import { Container } from 'react-bootstrap';
+import { FaUser } from "react-icons/fa6";  
 import { HiVolumeUp, HiOutlineDuplicate } from "react-icons/hi";  
 import { BsPersonFill, BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { TbRobot } from "react-icons/tb";
-
+ 
+ 
 export const ChatWindow = ({ messages, handleRatings }) => {
-    const [copyAlert, setCopyAlert] = useState(false);  // Estado para controlar o alerta de cópia
-
-    // Função para copiar o conteúdo da mensagem para a área de transferência
-    const handleCopyMessage = (text) => {
-        navigator.clipboard.writeText(text)
-            .then(() => {
-                setCopyAlert(true); // Ativa o alerta
-                setTimeout(() => setCopyAlert(false), 3000); // Desativa o alerta após 3 segundos
-            })
-            .catch((err) => {
-                console.error('Falha ao copiar: ', err);
-            });
-    };
-
     return (
         <Container fluid className="chat-window">
             {messages.map((msg, index) => (
@@ -41,7 +29,7 @@ export const ChatWindow = ({ messages, handleRatings }) => {
                                
                                 <button
                                     className='botaoIcone2'
-                                    onClick={() => handleCopyMessage(msg.text)} // Chama a função de cópia
+                                    onClick={() => navigator.clipboard.writeText(msg.text)}
                                     title="Copiar texto"
                                 >
                                     <HiOutlineDuplicate className="duplicate-icon" />
@@ -65,13 +53,6 @@ export const ChatWindow = ({ messages, handleRatings }) => {
                     </div>
                 </div>
             ))}
-
-            {/* Alerta de cópia */}
-            {copyAlert && (
-                <div className="copy-alert">
-                    Texto copiado para area de transferência!
-                </div>
-            )}
         </Container>
     );
 };
