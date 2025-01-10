@@ -69,10 +69,21 @@ const Chat = () => {
       setInput(""); // Limpa o campo de texto
   
       try {
-        // Substitui a lógica anterior pela chamada ao serviço
-        const response = await chatApisService.chat(input, token);
-  
-        // Atualiza as mensagens com a resposta da API
+        // Chamada à API com fetch e no-cors
+        await fetch(
+          "https://run-dev-hol-app-cbc-470141199353.southamerica-east1.run.app/chat",
+          {
+            method: "POST",
+            mode: "no-cors", // Configuração do modo no-cors
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ question: input }),
+          }
+        );
+
+        // Como não é possível acessar a resposta no-cors, exiba uma mensagem genérica
         setMessages((prevMessages) => [
           ...prevMessages,
           { text: response.response || "Sem resposta da API.", sender: "bot" },
