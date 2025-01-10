@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import UserService from '../../service/UserService';
+import { ChatApis } from "../../service/ApiServices/chatService";
 import "./index.css";
 import {
   Box,
@@ -13,6 +14,7 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
+const chatApisService = new ChatApis();
 
 const Chat = () => {
   const [messages, setMessages] = useState([]); // Lista de mensagens
@@ -20,35 +22,65 @@ const Chat = () => {
   const [file, setFile] = useState(null); // Arquivo selecionado
   const token = UserService.getToken();
 
-  // Função para enviar mensagens
+  // // Função para enviar mensagens
+  // const handleSendMessage = async () => {
+  //   if (input.trim() !== "") {
+  //     const userMessage = { text: input, sender: "user" };
+  //     setMessages([...messages, userMessage]); // Adiciona mensagem do usuário
+  //     setInput(""); // Limpa o campo de texto
+
+  //     try {
+  //       // Chamada à API com fetch e no-cors
+  //       await fetch(
+  //         "https://run-dev-hol-app-cbc-470141199353.southamerica-east1.run.app/chat",
+  //         {
+  //           method: "POST",
+  //           mode: "no-cors", // Configuração do modo no-cors
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({ question: input }),
+  //         }
+  //       );
+
+  //       // Como não é possível acessar a resposta no-cors, exiba uma mensagem genérica
+  //       setMessages((prevMessages) => [
+  //         ...prevMessages,
+  //         { text: "Mensagem enviada, mas a resposta não pode ser exibida.", sender: "bot" },
+  //       ]);
+  //     } catch (error) {
+  //       console.error("Erro ao chamar a API:", error);
+  //       setMessages((prevMessages) => [
+  //         ...prevMessages,
+  //         { text: "Erro ao obter resposta do servidor.", sender: "bot" },
+  //       ]);
+  //     }
+  //   }
+  // };
+
+
+
+
   const handleSendMessage = async () => {
     if (input.trim() !== "") {
       const userMessage = { text: input, sender: "user" };
       setMessages([...messages, userMessage]); // Adiciona mensagem do usuário
       setInput(""); // Limpa o campo de texto
-
+  
       try {
-        // Chamada à API com fetch e no-cors
-        await fetch(
-          "https://run-dev-hol-app-cbc-470141199353.southamerica-east1.run.app/chat",
-          {
-            method: "POST",
-            mode: "no-cors", // Configuração do modo no-cors
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ question: input }),
-          }
-        );
-
-        // Como não é possível acessar a resposta no-cors, exiba uma mensagem genérica
+        // Substitui a lógica anterior pela chamada ao serviço
+        const response = await chatApisService.chat(input, token);
+  
+        // Atualiza as mensagens com a resposta da API
         setMessages((prevMessages) => [
           ...prevMessages,
-          { text: "Mensagem enviada, mas a resposta não pode ser exibida.", sender: "bot" },
+          { text: response.response || "Sem resposta da API.", sender: "bot" },
         ]);
       } catch (error) {
-        console.error("Erro ao chamar a API:", error);
+        console.error("Erro ao chamar a API:", error.message);
+  
+        // Exibe mensagem de erro ao usuário
         setMessages((prevMessages) => [
           ...prevMessages,
           { text: "Erro ao obter resposta do servidor.", sender: "bot" },
@@ -56,6 +88,7 @@ const Chat = () => {
       }
     }
   };
+  
 
   // Função para lidar com o upload de arquivo
   const handleFileUpload = async () => {

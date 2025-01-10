@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Chat from "./Chat"; // Certifique-se de que o componente Chat esteja corretamente configurado
+import { ChatApis } from "../../service/ApiServices/chatService";
 
 function App() {
   const [activePage, setActivePage] = useState("home");
@@ -22,6 +23,8 @@ function App() {
   const [activeNotebook, setActiveNotebook] = useState(null);
   const [editingTitle, setEditingTitle] = useState(false);
   const [messages, setMessages] = useState([]); // Novo estado para mensagens
+  const chatApisService = new ChatApis();
+  
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -33,6 +36,30 @@ function App() {
 
       const formData = new FormData();
       formData.append("file", file);
+
+      // try {
+      //   const result = await chatApisService.notebook(formData);
+      //   console.log("Upload com sucesso:", result);
+      //   const newNotebook = {
+      //     title: file.name, // Usa o nome do arquivo como título
+      //     date: new Date().toLocaleDateString("pt-BR"),
+      //     content: null, // Não carrega o conteúdo
+      //     file: file, // Armazena o arquivo para referência futura
+      //   };
+
+      //   setNotebooks([...notebooks, newNotebook]);
+      //   setActiveNotebook(newNotebook); // Define o novo notebook como ativo
+      //   setActivePage("chat"); // Muda para a página do notebook
+      //   setUploadDialogOpen(false); // Fecha o diálogo de upload
+
+      //   setNotebooks([...notebooks, newNotebook]);
+      //   setActiveNotebook(newNotebook); // Define o novo notebook como ativo
+      //   setActivePage("chat"); // Muda para a página do notebook
+      //   setUploadDialogOpen(false); // Fecha o diálogo de upload
+      // } catch (error) {
+      //   console.error("Falha no envio do arquivo", error.message);
+      //   alert("Erro ao enviar o arquivo, tente novamente.");
+      // }
 
       try {
         const response = await fetch("https://run-dev-hol-app-cbc-470141199353.southamerica-east1.run.app/upload", {
