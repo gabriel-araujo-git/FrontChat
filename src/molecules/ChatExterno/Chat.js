@@ -28,20 +28,20 @@ const Chat = () => {
       setInput(""); // Limpa o campo de texto
 
       try {
-        // Chamada à API com fetch e no-cors
-        await fetch(
-          "https://run-dev-hol-app-cbc-470141199353.southamerica-east1.run.app/chat",
-          {
-            method: "POST",
-            mode: "no-cors", // Configuração do modo no-cors
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ question: input }),
-          }
-        );
-
+        const response = await fetch('https://run-dev-hol-app-cbc-api-geminilike-470141199353.southamerica-east1.run.app/ask', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            pergunta: input, 
+            thread_id: "" 
+          }),
+        });
+    
+       
         // Como não é possível acessar a resposta no-cors, exiba uma mensagem genérica
         setMessages((prevMessages) => [
           ...prevMessages,

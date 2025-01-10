@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import UserService from '../../service/UserService';
 import {
   AppBar,
   Toolbar,
@@ -22,7 +23,7 @@ function App() {
   const [activeNotebook, setActiveNotebook] = useState(null);
   const [editingTitle, setEditingTitle] = useState(false);
   const [messages, setMessages] = useState([]); // Novo estado para mensagens
-
+  const token = UserService.getToken();
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -35,15 +36,29 @@ function App() {
       formData.append("file", file);
 
       try {
-        const response = await fetch("https://run-dev-hol-app-cbc-470141199353.southamerica-east1.run.app/upload", {
+        const response = await fetch(":https://run-dev-hol-app-cbc-api-geminilike-470141199353.southamerica-east1.run.app/upload", {
           method: "POST",
-          body: formData,
-          mode:'no-cors'
+          
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+
+          },
+          body: JSON.stringify({
+            pergunta: FormData , 
+            session_token: "" 
+          }),
+          
         });
 
         if (!response.ok) {
-          throw new Error("Falha no upload do arquivo");
+          const errorResponse = await response.text();
+          console.error('Erro na API:', response.status, errorResponse);
+
+          throw new Error(`Erro ${response.status}: ${errorResponse}`);
         }
+    
 
         const data = await response.json();
         console.log("Arquivo enviado com sucesso:", data);

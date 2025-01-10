@@ -28,46 +28,60 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
   }, []);
 
   const handleSendMessage = async () => {
-    if (inputValue.trim() === '') return;
-    
+    if (!inputValue.trim()) {
+      setErrorMessage('Por favor, insira uma mensagem.');
+      return;
+    }
+  
     setShowWelcomeMessage(false);
     setShowChatButtons(false);
-    
+  
     const token = UserService.getToken();
+    console.log("Token de autenticação:", token);
+  
     const newMessages = [...messages, { text: inputValue, sender: 'user' }];
     setMessages(newMessages);
     setInputValue('');
     setIsLoading(true);
     setErrorMessage('');
-    console.log(token);
+  
     try {
-      const response = await fetch('https://run-dev-hol-app-cbc-470141199353.southamerica-east1.run.app/chat', {
+      const response = await fetch('https://run-dev-hol-app-cbc-orquestrador-470141199353.southamerica-east1.run.app/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ message: inputValue }),
-        mode: 'no-cors',
-        
+        body: JSON.stringify({
+          pergunta: inputValue, 
+          thread_id: "" 
+        }),
       });
-
+  
       if (!response.ok) {
-        throw new Error('Failed to fetch from API');
+        const errorResponse = await response.text();
+        console.error('Erro na API:', response.status, errorResponse);
+        throw new Error(`Erro ${response.status}: ${errorResponse}`);
       }
-
+  
       const data = await response.json();
       const botMessage = data?.reply || 'Desculpe, não consegui entender sua mensagem.';
-
+  
       setMessages(prevMessages => [...prevMessages, { text: botMessage, sender: 'bot' }]);
+  
     } catch (error) {
-      console.error('Error:', error);
-      setMessages(prevMessages => [...prevMessages, { text: 'Houve um erro ao processar sua mensagem. Tente novamente mais tarde.', sender: 'bot' }]);
+      console.error('Erro ao enviar mensagem:', error);
+      setMessages(prevMessages => [
+        ...prevMessages,
+        { text: 'Houve um erro ao processar sua mensagem. Tente novamente mais tarde.', sender: 'bot' }
+      ]);
       setErrorMessage('Algo deu errado. Tente novamente mais tarde.');
     } finally {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <div className="home-container">

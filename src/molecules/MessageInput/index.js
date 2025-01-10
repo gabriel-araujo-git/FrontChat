@@ -59,7 +59,7 @@ export const MessageInput = ({ inputValue, setInputValue, handleSendMessage }) =
                 >
                     <IoMdMic 
                         className="icon" 
-                        style={{ color: isListening ? 'red' : 'black' }} // Ajuste direto no estilo do ícone
+                        style={{ color: isListening ? 'red' : '' }} // Ajuste direto no estilo do ícone
                     />
                 </button>
                 <div className="empty-space"></div>
