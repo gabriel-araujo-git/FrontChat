@@ -20,6 +20,7 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
   const [showChatButtons, setShowChatButtons] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+  const [value, setValue] = useState(null);
 
   useEffect(() => {
     if (messages.length === 0) {
@@ -81,7 +82,58 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
       setIsLoading(false);
     }
   };
+
+  const handleRatings = async (value) => {
+    const token = UserService.getToken();
+    if (value !== null) {
+      setValue(value)
+      try {
+        const response = await fetch(
+          'https://run-dev-hol-app-cbc-orquestrador-470141199353.southamerica-east1.run.app/feedback',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              pergunta: inputValue || '', 
+              resposta: '',
+              documentos: '',
+              thread_id: '',
+              feedback: value ? 1 : 0,
+              motivo: '',
+            }),
+          }
+        );
+        
+        if (!response.ok) {
+          
+          const errorText = await response.text();
+          
+          throw new Error(
+            `Erro no envio de feedback : ${response.status} - ${errorText}`
+          );
+        }
+        
+        const data = await response.json();
+        console.log('Feedback enviado com sucesso:', data);
+      } catch (error) {
+        console.error('Erro na hora de enviar o feedback:', error.message);
+      }
+    } else {
+      console.warn('Valor de feedback é nulo, nenhuma ação realizada.');
+    }
   
+    console.log('Rating:', value);
+  };
+  
+  useEffect(() => {
+    if (value !== null) {
+      handleRatings(value);
+    }
+  }, [value]);
 
   return (
     <div className="home-container">
@@ -96,7 +148,11 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
           </Col>
         )}
         <Col xs={12}>
-          <ChatWindow messages={messages.filter(msg => msg.sender !== 'bot' || msg.text !== `Olá ${UserService.getName()}, como posso ajudar?`)} />
+          <ChatWindow 
+            messages={messages.filter(msg => msg.sender !== 'bot' || msg.text !== `Olá ${UserService.getName()}, 
+            como posso ajudar?`)}
+            handleRatings={handleRatings} 
+          />
           {isLoading && <LoadingSpinner />}
         </Col>
       </Row>
