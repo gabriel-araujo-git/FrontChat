@@ -21,12 +21,18 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
   const [showChatButtons, setShowChatButtons] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [value, setValue] = useState(null);
+  const [motivo, setMotivo] = useState(null); 
+  const [showMotivoOptions, setShowMotivoOptions] = useState(false);
+  const [customMotivo, setCustomMotivo] = useState(''); // Nouvel état pour le motif personnalisé
+  const [showCustomMotivoInput, setShowCustomMotivoInput] = useState(false);
+  const [isFeedback, setIsFeedback] = useState(false);
+
 
   useEffect(() => {
     if (messages.length === 0) {
       setShowWelcomeMessage(true);
     }
-  }, []);
+  }, [messages.length]);
 
   const handleSendMessage = async () => {
     if (!inputValue.trim()) {
@@ -70,6 +76,7 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
       const botMessage = data?.reply || 'Desculpe, não consegui entender sua mensagem.';
   
       setMessages(prevMessages => [...prevMessages, { text: botMessage, sender: 'bot' }]);
+      setIsFeedback(true);
   
     } catch (error) {
       console.error('Erro ao enviar mensagem:', error);
@@ -83,11 +90,24 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
     }
   };
 
-  const handleRatings = async (value) => {
+  const handleRatings = async (feedbackValue) => {
     const token = UserService.getToken();
-    if (value !== null) {
-      setValue(value)
+
+    let botResponse = '';
+
+
+
+    if (feedbackValue !== null) {
+      setValue(feedbackValue)
+      setIsFeedback(true);
+      if (feedbackValue === false){
+        setShowMotivoOptions(true);
+        return;
+      }
+      
+
       try {
+        console.log("aquiii......")
         const response = await fetch(
           'https://run-dev-hol-app-cbc-orquestrador-470141199353.southamerica-east1.run.app/feedback',
           {
@@ -119,15 +139,155 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
         
         const data = await response.json();
         console.log('Feedback enviado com sucesso:', data);
+
+        botResponse = feedbackValue === true 
+        ? 'Que bom que pude ajudar!' 
+        : 'Vi que sua experiência foi negativa, por favor, conte-nos mais para melhorar.';
+
       } catch (error) {
         console.error('Erro na hora de enviar o feedback:', error.message);
+        botResponse = 'Houve um erro ao processar seu feedback. Tente novamente mais tarde.';
       }
     } else {
       console.warn('Valor de feedback é nulo, nenhuma ação realizada.');
     }
+
+    if (botResponse) {
+      setMessages(prevMessages => [...prevMessages, { text: botResponse, sender: 'bot' }]);
+    }
   
-    console.log('Rating:', value);
+    console.log('Rating:', feedbackValue);
   };
+
+  const handleMotivoSelection = async (selectedMotivo) => {
+
+    if (selectedMotivo === 'Outro') {
+      setShowCustomMotivoInput(true);
+      return;
+    }
+
+
+    setMotivo(selectedMotivo);
+
+    setShowMotivoOptions(false); 
+
+    await submitMotivo(selectedMotivo)
+
+    // let botResponse = '';
+
+    // const token = UserService.getToken();
+
+    // try {
+    //   console.log("aquiii......")
+    //   const response = await fetch(
+    //     'https://run-dev-hol-app-cbc-orquestrador-470141199353.southamerica-east1.run.app/feedback',
+    //     {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         Accept: 'application/json',
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //       body: JSON.stringify({
+    //         pergunta: inputValue || '', 
+    //         resposta: '',
+    //         documentos: '',
+    //         thread_id: '',
+    //         feedback: value ? 1 : 0,
+    //         motivo: motivo,
+    //       }),
+    //     }
+    //   );
+      
+    //   if (!response.ok) {
+        
+    //     const errorText = await response.text();
+        
+    //     throw new Error(
+    //       `Erro no envio de feedback : ${response.status} - ${errorText}`
+    //     );
+    //   }
+      
+    //   const data = await response.json();
+    //   console.log('Feedback enviado com sucesso:', data);
+
+    //   // botResponse = feedbackValue === true 
+    //   // ? 'Que bom que pude ajudar!' 
+    //   // : 'Vi que sua experiência foi negativa, por favor, conte-nos mais para melhorar.';
+    //   botResponse = 'Obrigado pelo FeedBack !!'
+    // } catch (error) {
+    //   console.error('Erro na hora de enviar o feedback:', error.message);
+    //   botResponse = 'Houve um erro ao processar seu feedback. Tente novamente mais tarde.';
+    // }
+
+
+    // if (botResponse) {
+    //   setMessages(prevMessages => [...prevMessages, { text: botResponse, sender: 'bot' }]);
+    // }
+    // // await handleRatings(false); 
+  };
+
+  const handleCustomMotivoSubmit = async () => {
+    if (!customMotivo.trim()) {
+      setErrorMessage('Por favor, insira o motivo.');
+      return;
+    }
+
+    setMotivo(customMotivo);
+    setShowCustomMotivoInput(false);
+    setCustomMotivo('');
+    setShowMotivoOptions(false);
+
+    await submitMotivo(customMotivo);
+  };
+
+  const submitMotivo = async (selectedMotivo) => {
+    const token = UserService.getToken();
+    let botResponse = '';
+
+
+    try {
+
+      const response = await fetch(
+        'https://run-dev-hol-app-cbc-orquestrador-470141199353.southamerica-east1.run.app/feedback',
+        {
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          pergunta: inputValue || '',
+          resposta: '',
+          documentos: '',
+          thread_id: '',
+          feedback: value ? 1 : 0,
+          motivo: selectedMotivo,
+        }),
+      }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Erro no envio de feedback : ${response.status} - ${errorText}`
+        );
+      }
+
+      const data = await response.json();
+      console.log('Feedback enviado com sucesso:', data);
+      botResponse = 'Obrigado pelo FeedBack !!';
+
+    } catch(error) {
+      console.error('Erro na hora de enviar o feedback:', error.message);
+      botResponse = ''
+  }
+
+  if (botResponse) {
+    setMessages((prevMessages) => [...prevMessages, { text: botResponse, sender: 'bot' }]);
+  }
+};
   
   useEffect(() => {
     if (value !== null) {
@@ -152,8 +312,38 @@ export const HomeMolecule = ({ setShowHistory, showHistory }) => {
             messages={messages.filter(msg => msg.sender !== 'bot' || msg.text !== `Olá ${UserService.getName()}, 
             como posso ajudar?`)}
             handleRatings={handleRatings} 
+            isFeedback={isFeedback}
           />
           {isLoading && <LoadingSpinner />}
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          {showMotivoOptions && (
+            <div className="motivo-options">
+              <p>Vi que sua experiência foi negativa, nos conte o motivo:</p>
+              <ul>
+                <li onClick={() => handleMotivoSelection('Resposta incorreta')}>Resposta incorreta</li>
+                <li onClick={() => handleMotivoSelection('Documento incorreto')}>Documento incorreto</li>
+                <li onClick={() => handleMotivoSelection('Documento e resposta incorreta')}>Documento e resposta incorreta</li>
+                <li onClick={() => handleMotivoSelection('Outro')}>Outro, nos conte o que aconteceu</li>
+              </ul>
+            </div>
+          )}
+
+          {showCustomMotivoInput && (
+            <div className="custom-motivo-input">
+              <p>Por favor, insira o motivo:</p>
+              <input
+                type="text"
+                value={customMotivo}
+                onChange={(e) => setCustomMotivo(e.target.value)}
+                placeholder="Digite o motivo aqui"
+              />
+              <button onClick={handleCustomMotivoSubmit}>Enviar</button>
+            </div>
+          )}
+
         </Col>
       </Row>
       <Row>
