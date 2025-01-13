@@ -1,0 +1,5 @@
+variables:
+  # DEPLOY CLOUD STORAGE '/stages/deploy/deploy-cloud-storage.yml'
+  STORAGE_BUCKET_NAME: "frontend-copel-$CI_COMMIT_BRANCH"
+  STORAGE_PROJECT_ID: "prj-$CI_COMMIT_BRANCH-hol-sandbox-brq-cple"
+  STORAGE_BUCKET_LOCATION: "southamerica-east1"

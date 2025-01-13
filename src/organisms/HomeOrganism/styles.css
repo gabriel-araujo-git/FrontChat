@@ -66,3 +66,28 @@
     
 }
 
+
+/* Botão de adicionar */
+.icon-button {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    padding: 0;
+  }
+  
+  .small-icon {
+    color: rgb(255, 102, 0); /* Laranja */
+    font-size: 1rem;
+  }
+  
+  .history-item .delete-icon {
+    display: none; /* Oculto por padrão */
+    color: #606060;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .history-item:hover .delete-icon {
+    display: inline; /* Aparece ao passar o mouse */
+  }
+  

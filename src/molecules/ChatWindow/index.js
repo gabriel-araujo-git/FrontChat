@@ -3,10 +3,9 @@ import './styles.css';
 import { Container } from 'react-bootstrap';
 import { FaUser } from "react-icons/fa6";  
 import { HiVolumeUp, HiOutlineDuplicate } from "react-icons/hi";  
-import { BsPersonFill, BsFillHandThumbsUpFill, BsFillHandThumbsDownFill } from "react-icons/bs";
+import { BsPersonFill, BsHandThumbsUp, BsHandThumbsDown } from "react-icons/bs";
 import { TbRobot } from "react-icons/tb";
- 
- 
+
 export const ChatWindow = ({ messages, handleRatings }) => {
     return (
         <Container fluid className="chat-window">
@@ -18,15 +17,19 @@ export const ChatWindow = ({ messages, handleRatings }) => {
                         <TbRobot alt="Logo" className="logo-message" />
                     )}
                    
-                    <div className="message-content">
+                    <div className="message-content">   
                         <div className={`message-box ${msg.sender}`}>
-                            <span>{msg.text}</span>
+                            {msg.isHtml ? (
+                                
+                                <div className="reference-message" dangerouslySetInnerHTML={{ __html: msg.text }} />
+                            ) : (
+                                <span>{msg.text}</span>
+                            )}
                             {msg.sender === 'bot' && <HiVolumeUp className="volume-icon" />}
                         </div>
  
                         {msg.sender === 'bot' && (
                             <div className='message-icons'>
-                               
                                 <button
                                     className='botaoIcone2'
                                     onClick={() => navigator.clipboard.writeText(msg.text)}
@@ -39,14 +42,14 @@ export const ChatWindow = ({ messages, handleRatings }) => {
                                     onClick={() => handleRatings(true)}
                                     title="Gostei"
                                 >
-                                    <BsFillHandThumbsUpFill className="thumbs-up-icon" />
+                                    <BsHandThumbsUp className="thumbs-up-icon" />
                                 </button>
                                 <button
                                     className='botaoIcone2'
                                     onClick={() => handleRatings(false)}
                                     title="Não gostei"
                                 >
-                                    <BsFillHandThumbsDownFill className="thumbs-down-icon" />
+                                    <BsHandThumbsDown className="thumbs-down-icon" />
                                 </button>
                             </div>
                         )}

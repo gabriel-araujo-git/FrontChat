@@ -34,31 +34,22 @@ function App() {
 
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("session_token", "")
 
       try {
-        const response = await fetch(":https://run-dev-hol-app-cbc-api-geminilike-470141199353.southamerica-east1.run.app/upload", {
+        const response = await fetch(":https://run-dev-hol-app-cbc-orquestrador-470141199353.southamerica-east1.run.app/upload", {
           method: "POST",
-          
           headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
             'Authorization': `Bearer ${token}`,
-
           },
-          body: JSON.stringify({
-            pergunta: FormData , 
-            session_token: "" 
-          }),
-          
+          body: formData
         });
 
         if (!response.ok) {
           const errorResponse = await response.text();
           console.error('Erro na API:', response.status, errorResponse);
-
           throw new Error(`Erro ${response.status}: ${errorResponse}`);
         }
-    
 
         const data = await response.json();
         console.log("Arquivo enviado com sucesso:", data);
@@ -113,29 +104,19 @@ function App() {
   };
 
   // Função para redirecionar para o chat principal
-  const handleGoToHome = () => {
-    window.location.href = "http://localhost:8080/home";
-  };
+
 
   return (
     <Box sx={{ bgcolor: "#121212", color: "#fff", minHeight: "100vh" }}>
       <AppBar position="static" sx={{ bgcolor: "#1f1f1f" }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            NotebookLM
+            Chat Externo
           </Typography>
           <Button color="inherit" onClick={() => setActivePage("home")}>
             Home
           </Button>
-          {activePage === "home" && (
-            <Button
-              color="inherit"
-              onClick={handleGoToHome} // Chamando a função de redirecionamento
-              sx={{ ml: 2 }}
-            >
-              Voltar ao Chat
-            </Button>
-          )}
+          
         </Toolbar>
       </AppBar>
 
@@ -146,10 +127,16 @@ function App() {
           </Typography>
           <Button
             variant="contained"
-            color="primary"
             startIcon={<UploadFileIcon />}
             onClick={() => setUploadDialogOpen(true)}
-            sx={{ mb: 3 }}
+            sx={{
+              mb: 3,
+              background: "linear-gradient(45deg, #FF6C02, #FF9A3E, #FFB658)",
+              color: "#fff", // Mantém o texto legível
+              "&:hover": {
+                background: "linear-gradient(45deg, #E65C00, #FF8C32, #FFA94D)", // Efeito de hover
+              },
+            }}
           >
             + Criar novo
           </Button>

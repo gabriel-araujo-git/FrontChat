@@ -2,21 +2,18 @@
 
 
 .history-panel {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  width: 15% !important;
-  height: 150vh !important;
-  padding: 10px;
-  background-color:#E0E0E4;
-  box-shadow: 0 4px 8px rgba(255, 202, 202, 0.1);
-  border-radius: 15px !important;
-  
-  flex-grow: 1;
-}
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 15%;
+    height: 100vh; /* Ocupa 100% da altura visível da janela */
+    padding: 10px;
+    background-color: #E0E0E4;
+    box-shadow: 0 4px 8px rgba(255, 202, 202, 0.1);
+    border-radius: 0;
+    flex-grow: 1;
 
+}
 .history-item {
   width: 95%;
 max-width: 100%;
@@ -31,7 +28,7 @@ display: flex;
 justify-content: center; /* Centraliza horizontalmente os itens */
 align-items: center !important; /* Centraliza verticalmente os itens */
 
-font-family: 'Poppins', sans-serif;
+font-family: 'Poppins', sans-serif !important;
 }
 
 
@@ -107,3 +104,20 @@ font-family: 'Poppins', sans-serif;
 }
 
  
+.dark-mode .history-panel {
+  background-color: #333; /* Fundo escuro */
+  color: #fff; /* Texto claro */
+}
+
+.dark-mode .history-item {
+  background-color: #444;
+  color: #fff;
+}
+
+.dark-mode .history-item .delete-icon {
+  color: #bbb;
+}
+
+.dark-mode .icon-button .small-icon {
+  color: #ffa500; /* Ícone laranja */
+}
