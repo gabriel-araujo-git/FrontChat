@@ -164,3 +164,38 @@
   font-size: 20px;
   margin-bottom: 2rem;
 }
+
+
+.source-button {
+  background-color: #ff8b33;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.source-button:hover {
+  background-color: #e57a2a;
+}
+
+.reference-message {
+  font-size: 14px; /* Ajuste para o tamanho desejado */
+  color: orange; /* Mude para a cor laranja */
+  line-height: 1.5; /* Melhora o espaçamento entre linhas */
+  font-weight: bold; 
+  height: 9%;/* Opcional, para destacar mais */
+}
+
+.reference-message a {
+  color: orange; /* Links dentro da mensagem também ficam laranjas */
+  text-decoration: underline; /* Opcional, para destacar links */
+}
+
+.reference-message a:hover {
+  color: darkorange; /* Efeito ao passar o mouse */
+  text-decoration: none; /* Opcional, para remover sublinhado ao hover */
+}

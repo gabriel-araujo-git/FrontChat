@@ -176,3 +176,6 @@ body {
     background-color: #ff6b33; 
     transform: translateY(0); 
   }
+  .botMessageWithLinks{
+    background-color: #ff8b33;
+  }
